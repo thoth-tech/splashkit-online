@@ -38,18 +38,18 @@ jobs:
         with:
           node-version: 20
         env:
-          GITHUB_TOKEN: ''
+          GITHUB_TOKEN: ""
 
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          path: splashkitonline
-          submodules: 'recursive'
+          path: sko
+          submodules: "recursive"
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          fetch-depth: '0'
+          fetch-depth: "0"
         env:
-          GITHUB_TOKEN: ''
+          GITHUB_TOKEN: ""
 
       - name: Checkout scripts
         uses: actions/checkout@v4
@@ -67,10 +67,10 @@ jobs:
             GITHUB_SHA="${{ github.event.pull_request.head.sha }}"
           fi
 
-          cd ./splashkitonline
+          cd ./sko
           # only run the `build_static_site.sh` in the PR if the user changed it - otherwise use the latest in main.
           if ! git diff --quiet $(git merge-base "origin/main" "$GITHUB_SHA").."$GITHUB_SHA" -- .github/workflows/ &>/dev/null; then
-            script_path="./splashkitonline/.github/workflows/build_static_site.sh" # use the PR's
+            script_path="./sko/.github/workflows/build_static_site.sh" # use the PR's
           else
             script_path="./script/.github/workflows/build_static_site.sh" # use main's
           fi
@@ -79,13 +79,13 @@ jobs:
 
           bash "$script_path" "$GITHUB_SHA" "${{ github.event_name }}" "${{ github.repository }}"
         env:
-          GITHUB_TOKEN: ''
+          GITHUB_TOKEN: ""
 
       - name: Upload the build as an artifact
         uses: actions/upload-artifact@v4.4.3
         with:
           name: preview-${{ github.sha }}
-          path: ./splashkitonline/Browser_IDE
+          path: ./sko/Browser_IDE
           retention-days: 1
           compression-level: 8
           overwrite: true
@@ -120,8 +120,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: repo
-          submodules: 'false'
-          fetch-depth: '0'
+          submodules: "false"
+          fetch-depth: "0"
 
       # Note, we download it _into_ the git folder (so a .git is in a parent dir)
       # The edit_release.py script will upload the assets in release_assets.txt, _relative_ to where the script is
@@ -149,8 +149,8 @@ jobs:
           fi
           file_name=$(echo $tag_name | sed "s#/#_#")
 
-          zip -r "../splashkitonline-static-site-$file_name.zip" ./ # note: this name is expected in download_github_site_previews.py
-          echo "../splashkitonline-static-site-$file_name.zip" >> ../../script/.github/workflows/release_assets.txt
+          zip -r "../sko-static-site-$file_name.zip" ./ # note: this name is expected in download_github_site_previews.py
+          echo "../sko-static-site-$file_name.zip" >> ../../script/.github/workflows/release_assets.txt
 
           python3 ../../script/.github/workflows/edit_release.py "update" "${{ secrets.GITHUB_TOKEN }}" "${{ github.repository }}" "$tag_name" "${{ github.sha }}" yes "../../script/.github/workflows/release_assets.txt" "# Static Site Build ($tag_name)\nA static build of $tag_name, used in the live deployment :smiley:"
 

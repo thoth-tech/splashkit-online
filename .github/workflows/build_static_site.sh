@@ -2,7 +2,7 @@ set -e
 #build_static_site.sh <sha> <workflow event_name> <username/repo>
 
 # Do we need to build?
-cd ./splashkitonline
+cd ./sko
 # only build if the SplashKitWasm folder has changed, or if this was a push to a branch (so branches always build)
 if ! git diff --quiet $(git merge-base "origin/main" "$1").."$1" -- SplashKitWasm &>/dev/null || [ "$2" == "push" ]; then
     cd ../
@@ -10,8 +10,8 @@ if ! git diff --quiet $(git merge-base "origin/main" "$1").."$1" -- SplashKitWas
     echo "========================================"
     echo "Downloading Compilation Pre-builts (To improve...these should be buildable too)"
     echo "========================================"
-    mkdir -p ./splashkitonline/SplashKitWasm/prebuilt/cxx/compiler/
-    cd ./splashkitonline/SplashKitWasm/prebuilt/cxx/compiler/
+    mkdir -p ./sko/SplashKitWasm/prebuilt/cxx/compiler/
+    cd ./sko/SplashKitWasm/prebuilt/cxx/compiler/
     wget -O clang++.js https://raw.githubusercontent.com/WhyPenguins/SplashkitOnline/github-live/Browser_IDE/compilers/cxx/bin/clang++.js
     wget -O clang.wasm.lzma https://raw.githubusercontent.com/WhyPenguins/SplashkitOnline/github-live/Browser_IDE/compilers/cxx/bin/clang.wasm.lzma
     wget -O wasm-ld.js https://raw.githubusercontent.com/WhyPenguins/SplashkitOnline/github-live/Browser_IDE/compilers/cxx/bin/wasm-ld.js
@@ -41,11 +41,11 @@ if ! git diff --quiet $(git merge-base "origin/main" "$1").."$1" -- SplashKitWas
     ./emsdk activate 3.1.48
     source ./emsdk_env.sh
     cd ../
-    mkdir -p ./splashkitonline/SplashKitWasm/out/cxx/compiler/ # this one is due to a mistake in old CMakeLists, can be removed soon
+    mkdir -p ./sko/SplashKitWasm/out/cxx/compiler/ # this one is due to a mistake in old CMakeLists, can be removed soon
     # build this as well...
 
 
-    cd ./splashkitonline/SplashKitWasm/cmake/
+    cd ./sko/SplashKitWasm/cmake/
 
     emcmake cmake -G "Unix Makefiles" -DENABLE_JS_BACKEND=ON -DENABLE_CPP_BACKEND=ON -DENABLE_FUNCTION_OVERLOADING=ON -DCOMPRESS_BACKENDS=ON .
     emmake make -j8
@@ -66,7 +66,7 @@ else
     # Perhaps there's a cleaner way :)
 
     # first let's get a list of files _not_ to copy
-    cd ./splashkitonline
+    cd ./sko
     TRACKED_FILES=$(git log --pretty=format: --name-only --diff-filter=A -- Browser_IDE| sort - | sed '/^$/d')
     EXCLUDE_FILE=$(mktemp)
     echo "$TRACKED_FILES" | sed "s|^Browser_IDE||" > "$EXCLUDE_FILE"
@@ -85,13 +85,13 @@ else
     mkdir prebuilt
     cd prebuilt
     # Download main's latest release
-    wget "https://github.com/$3/releases/download/branch%2Fmain/splashkitonline-static-site-branch_main.zip"
-    unzip splashkitonline-static-site-branch_main.zip
-    rm splashkitonline-static-site-branch_main.zip
+    wget "https://github.com/$3/releases/download/branch%2Fmain/sko-static-site-branch_main.zip"
+    unzip sko-static-site-branch_main.zip
+    rm sko-static-site-branch_main.zip
     cd ../
 
     # copy in all the untracked files!
-    rsync -av --progress --exclude-from="$EXCLUDE_FILE" "prebuilt/" "splashkitonline/Browser_IDE/"
+    rsync -av --progress --exclude-from="$EXCLUDE_FILE" "prebuilt/" "sko/Browser_IDE/"
 
 fi
 
@@ -99,7 +99,7 @@ fi
 echo "========================================"
 echo "Install Node Dependencies"
 echo "========================================"
-cd ./splashkitonline/Browser_IDE
+cd ./sko/Browser_IDE
 
 npm install
 
@@ -110,7 +110,7 @@ cd ../../
 echo "========================================"
 echo "Re-Structure Static Site"
 echo "========================================"
-cd ./splashkitonline/Browser_IDE
+cd ./sko/Browser_IDE
 
 # if changed, remember to update the explicit excludes above
 mv node_modules/codemirror codemirror-5.65.15

@@ -35,7 +35,7 @@ def process_release(release, base_dir):
     tag_name = release["tag_name"]
     asset_url = None
     
-    zip_name = f"splashkitonline-static-site-{tag_name.replace("/","_")}.zip"
+    zip_name = f"sko-static-site-{tag_name.replace("/","_")}.zip"
     
     for asset in release["assets"]:
         if asset["name"] == zip_name:

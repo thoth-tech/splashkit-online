@@ -2,7 +2,7 @@ name: Assemble and Deploy Live Site
 
 on:
   workflow_run:
-    workflows: ['Build Static Site']
+    workflows: ["Build Static Site"]
     types:
       - completed
 
@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # This job downloads and extracts every release that has a splashkitonline-static-site-....zip asset
+  # This job downloads and extracts every release that has a sko-static-site-....zip asset
   # It then arranges them into folders, de-duplicates large files, and deploys the result as the GitHub Pages site.
   deploy:
     # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -66,7 +66,7 @@ jobs:
       - name: Delete existing page artifact # allows re-run of workflow
         uses: geekyeggo/delete-artifact@v5
         with:
-            name: github-pages
+          name: github-pages
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -74,7 +74,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload IDE site
-          path: './deployed'
+          path: "./deployed"
 
       - name: Deploy to GitHub Pages
         id: deployment
