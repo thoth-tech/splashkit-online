@@ -23,7 +23,7 @@ let SplashKitOnlineLanguageDefinitions = [
             runtimeFiles: [
                 "babel/babel.js", //intention is to make this a compilerFile instead
                 "moduleEventTarget.js",
-                "loadsplashkit.js",
+                "compilers/javascript/loadsplashkit.js",
                 "javascript/storage/fsevents.js",
                 "compilers/javascript/codeProcessor.js", //intention is to make this a compilerFile instead
                 "compilers/javascript/environmentInternal.js", // and this should be based on ExecutionEnvironmentInternal.js
