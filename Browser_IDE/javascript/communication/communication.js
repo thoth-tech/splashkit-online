@@ -4,6 +4,9 @@
 let __tempCallbacks = new Map();
 let __nextTempCallbackID = 0;
 
+/* This class is used establish bi directional communication
+between the execution enviroment and the IDE */
+
 class PromiseChannel {
     constructor(listener, receiver) {
         this.receiver = receiver;

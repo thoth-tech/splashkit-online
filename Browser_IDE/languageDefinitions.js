@@ -25,8 +25,8 @@ let SplashKitOnlineLanguageDefinitions = [
                 "moduleEventTarget.js",
                 "loadsplashkit.js",
                 "javascript/storage/fsevents.js",
-                "javascript/executionEnviroment/executionEnvironment_CodeProcessor.js", //intention is to make this a compilerFile instead
-                "javascript/executionEnviroment/executionEnvironment_Internal.js", // and this should be based on ExecutionEnvironmentInternal.js
+                "compilers/javascript/codeProcessor.js", //intention is to make this a compilerFile instead
+                "compilers/javascript/environmentInternal.js", // and this should be based on ExecutionEnvironmentInternal.js
             ],
             runtimeDependencies: [
                 "runtimes/javascript/bin/SplashKitBackendWASM.js",
