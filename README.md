@@ -1,5 +1,5 @@
 
-<img src="SplashKitOnlineIDETitle.png" alt="SplashKit Online IDE"/>
+<img src="assets/readme/SplashKitOnlineIDETitle.png" alt="SplashKit Online IDE"/>
 
 [![GitHub contributors](https://img.shields.io/github/contributors/thoth-tech/SplashkitOnline?label=Contributors&color=F5A623)](https://github.com/thoth-tech/SplashkitOnline/graphs/contributors)
 [![GitHub issues](https://img.shields.io/github/issues/thoth-tech/SplashkitOnline?label=Issues&color=F5A623)](https://github.com/thoth-tech/SplashkitOnline/issues)
@@ -13,7 +13,7 @@
 SplashKit Online is a browser-based development environment for beginner programmers!
 With it you can immediately get started programming in JavaScript and/or C++ using the [SplashKit](https://splashkit.io) library, which is an easy to use library for handling input, graphics, and sound - everything you need to make a game!
 
-[![prototype-image](SplashKitOnlineIDEPrototypeImage.png)](https://thoth-tech.github.io/SplashkitOnline/)
+[![prototype-image](assets/readme/SplashKitOnlineIDEPrototypeImage.png)](https://thoth-tech.github.io/SplashkitOnline/)
 
 # <p align="center">[Try Online!](https://thoth-tech.github.io/SplashkitOnline/)</p>
 
