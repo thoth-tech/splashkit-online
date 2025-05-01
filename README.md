@@ -53,7 +53,7 @@ npm install
 However, we also need to import the compiled SplashKit library and compiler, as they are not included in the repository by default due to their size. The Node server will import the necessary files automatically on start-up, but this can also be achieved with the included `setup.py` script.
 
 ```bash
-cd SplashkitOnline/setup/
+cd SplashkitOnline/Browser_IDE/setup/
 python3 setup.py # optional
 ```
 
