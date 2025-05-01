@@ -53,10 +53,14 @@ npm install
 However, we also need to import the compiled SplashKit library and compiler, as they are not included in the repository by default due to their size. The Node server will import the necessary files automatically on start-up, but this can also be achieved with the included `setup.py` script.
 
 ```bash
+cd SplashkitOnline/setup/
 python3 setup.py # optional
-npm run server
 ```
 
+```bash
+cd SplashkitOnline/Browser_IDE/
+npm run server
+```
 Now you'll be able to load up `localhost:8000` in a browser and see the IDE!
 
 **Note:** For those concerned about downloading the binaries; these are _WebAssembly_ binaries, not native binaries like `.exe` - they execute securely inside the browser and have no access to the real computer/filesystem.
