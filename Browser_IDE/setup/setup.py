@@ -18,7 +18,7 @@ def download(repo_path, src, dst):
     urllib.request.urlretrieve(repo_path + src, dst + os.path.basename(src))
 
 # Language-agnostic files
-download(thoth_tech_repo_path, "binaries/Browser_IDE/splashkit/splashkit_autocomplete.json", "./splashkit/")
+download(thoth_tech_repo_path, "binaries/Browser_IDE/splashkit/splashkit_autocomplete.json", "./../splashkit/")
 
 # JS files
 download(thoth_tech_repo_path, "binaries/Browser_IDE/splashkit/SplashKitBackendWASM.js", js_runtime_dir)
