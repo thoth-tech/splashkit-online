@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const setup = require('./setup.js');
+const setup = require('./setup/setup.js');
 var path = require('path');
 
 async function run(){
