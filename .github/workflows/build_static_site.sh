@@ -67,9 +67,9 @@ else
 
     # first let's get a list of files _not_ to copy
     cd ./sko
-    TRACKED_FILES=$(git log --pretty=format: --name-only --diff-filter=A -- Browser_IDE| sort - | sed '/^$/d')
+    TRACKED_FILES=$(git log --pretty=format: --name-only --diff-filter=A | sort - | sed '/^$/d')
     EXCLUDE_FILE=$(mktemp)
-    echo "$TRACKED_FILES" | sed "s|^Browser_IDE||" > "$EXCLUDE_FILE"
+    echo "$TRACKED_FILES" > "$EXCLUDE_FILE"
 
     # add some explicit excludes
     echo "/codemirror-5.65.15" >> "$EXCLUDE_FILE"
@@ -91,7 +91,7 @@ else
     cd ../
 
     # copy in all the untracked files!
-    rsync -av --progress --exclude-from="$EXCLUDE_FILE" "prebuilt/" "sko/Browser_IDE/"
+    rsync -av --progress --exclude-from="$EXCLUDE_FILE" "prebuilt/" "sko/"
 
 fi
 
@@ -99,18 +99,25 @@ fi
 echo "========================================"
 echo "Install Node Dependencies"
 echo "========================================"
-cd ./sko/Browser_IDE
+cd ./sko
 
 npm install
 
-cd ../../
+cd ../
 
 
 
 echo "========================================"
 echo "Re-Structure Static Site"
 echo "========================================"
-cd ./sko/Browser_IDE
+cd ./sko
+
+# Move node_modules into Browser_IDE if it exists, otherwise work in current directory
+if [ -d "Browser_IDE" ]; then
+    # If Browser_IDE exists (from prebuilt), move node_modules there
+    mv node_modules Browser_IDE/
+    cd Browser_IDE
+fi
 
 # if changed, remember to update the explicit excludes above
 mv node_modules/codemirror codemirror-5.65.15
@@ -119,6 +126,26 @@ mv node_modules/@babel/standalone babel
 mv node_modules/split.js/dist split.js
 mv node_modules/mime/dist mime
 rm -rf external/js-lzma/data
-mv ../DemoProjects DemoProjects
 
-cd ../
+# Move DemoProjects based on current directory
+if [ "$(basename $PWD)" = "Browser_IDE" ]; then
+    # We're in Browser_IDE, check if DemoProjects exists at ../../DemoProjects
+    if [ -d "../../DemoProjects" ]; then
+        mv ../../DemoProjects DemoProjects
+    fi
+    cd ../../
+else
+    # We're in sko/, check if DemoProjects exists at ../DemoProjects
+    if [ -d "../DemoProjects" ]; then
+        mv ../DemoProjects DemoProjects
+    fi
+    # Create Browser_IDE directory and move everything into it for consistent upload structure
+    mkdir -p Browser_IDE
+    # Move all files except Browser_IDE itself into Browser_IDE
+    for item in *; do
+        if [ "$item" != "Browser_IDE" ]; then
+            mv "$item" Browser_IDE/
+        fi
+    done
+    cd ../
+fi
